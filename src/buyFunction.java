@@ -71,7 +71,6 @@ public class buyFunction {
         try {
             st.executeUpdate(addTicket);
             JOptionPane.showMessageDialog(null,"Your payment is DONE.");
-            System.exit(0);
         } catch (SQLException e1) {
             int newSeat = seat++;
             e1.printStackTrace();

@@ -19,7 +19,7 @@ public class mainFrame extends JFrame implements ActionListener {
     JComboBox toComboBox = new JComboBox(new Object[]{"To"});
     JComboBox passangersCB = new JComboBox(new Object[]{"Passenger"});
     JButton searchBTN = new JButton("Search");
-    JButton clearBTN = new JButton("Clear");
+    JButton refreshBTN = new JButton("Refresh");
     JXDatePicker departureDate = new JXDatePicker();
     JMenuBar menuBar = new JMenuBar();
     JMenu tools = new JMenu("Tools");
@@ -52,7 +52,7 @@ public class mainFrame extends JFrame implements ActionListener {
         classSelection.add(businessRadioBTN);
 
         searchBTN.addActionListener(this);
-        clearBTN.addActionListener(this);
+        refreshBTN.addActionListener(this);
         quit.addActionListener(this);
         adminPanel.addActionListener(this);
         about.addActionListener(this);
@@ -82,7 +82,7 @@ public class mainFrame extends JFrame implements ActionListener {
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(searchBTN)
                                 .addGap(18, 18, 18)
-                                .addComponent(clearBTN)
+                                .addComponent(refreshBTN)
                                 .addGap(27, 27, 27))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(36, 36, 36)
@@ -138,7 +138,7 @@ public class mainFrame extends JFrame implements ActionListener {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(searchBTN)
-                                        .addComponent(clearBTN))
+                                        .addComponent(refreshBTN))
                                 .addGap(22, 22, 22))
         );
 
@@ -172,11 +172,19 @@ public class mainFrame extends JFrame implements ActionListener {
                 Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else if (e.getSource() == clearBTN){
-            fromComboBox.setSelectedItem(null);
+        else if (e.getSource() == refreshBTN){
+            /*fromComboBox.setSelectedItem(null);
             toComboBox.setSelectedItem(null);
             departureDate.setDate(Calendar.getInstance().getTime());
-            economyRadioBTN.isSelected();
+            economyRadioBTN.isSelected();*/
+            this.dispose();
+            try {
+                mainFrame newFrame = new mainFrame();
+                newFrame.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
 
         if (e.getSource() == quit){

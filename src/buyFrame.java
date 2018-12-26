@@ -270,6 +270,7 @@ public class buyFrame extends JFrame implements ActionListener {
 
                 try {
                     function.buyFunction(gender,name,surname,passNum,birthDate,telNo,email,flightID,classVal,busSeat,ecoSeat);
+                    this.dispose();
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }

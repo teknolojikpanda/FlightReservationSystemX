@@ -4,6 +4,8 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,6 +27,7 @@ public class editPassengerFrame extends JFrame {
     private static Statement st;
     SqlConnection connection = new SqlConnection();
     JPanel panel = new JPanel();
+    JButton refreshBTN = new JButton("REFRESH");
 
     public editPassengerFrame() throws SQLException{
 
@@ -55,6 +58,7 @@ public class editPassengerFrame extends JFrame {
             JLabel telNoLBL = new JLabel( telNo );
             JLabel emailLBL = new JLabel( email );
             JButton editBTN = new JButton("EDIT");
+            JButton deleteBTN = new JButton("DELETE");
 
             panel.add(genderLBL);
             panel.add(passNameLBL);
@@ -64,6 +68,7 @@ public class editPassengerFrame extends JFrame {
             panel.add(telNoLBL);
             panel.add(emailLBL);
             panel.add(editBTN);
+            panel.add(deleteBTN);
 
             editBTN.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e){
@@ -76,10 +81,35 @@ public class editPassengerFrame extends JFrame {
 
                 }
             });
+            deleteBTN.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e){
+                    SqlOperation op = new SqlOperation();
+                    try {
+                        op.delete2("PASSENGERS","PASSPORT_NUM",passportNumber);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+
+                }
+            });
         }
 
         add(panel);
-        panel.setLayout(new GridLayout(0,8));
+        add(refreshBTN);
+        refreshBTN.addActionListener(new ActionListener() {  // 0 = Yes && 1 = No && 3 = Cancel
+                public void actionPerformed(ActionEvent e) {
+
+                dispose();
+                    try {
+                        editPassengerFrame newFrame = new editPassengerFrame();
+                        newFrame.setVisible(true);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(editPassengerFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            });
+        panel.setLayout(new GridLayout(0,9));
         result.close();
         st.close();
     }
